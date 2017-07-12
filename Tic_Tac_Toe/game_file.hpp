@@ -57,6 +57,7 @@ public:
 	void player_move(); //Player move will be made after every check, they will type a number in from 1 to 9 to choose their space.
 	void play(); //Play run's the game each frame, and runs in the run_game file;
 	void board_refresh();
+	int input_error(player);
 	void new_game(); //At completion of the game, the player will be asked if they want to start a new game.
 };
 
