@@ -260,23 +260,39 @@ void game::new_game()
 //----------------------------------------------------------------------
 void game::player_move()
 {
-	if (player_1_turn == true)
-	{
-		player_1.name_output();
-		std::cout << " , what block would you like to select? (Please Enter a number): ";
-		std::cin >> current_move; std::cout << std::endl;
-		player_1_moves.push_back(current_move);
-		player_1_turn = false;
-	}
+		if (player_1_turn == true)
+		{
+			player_1.name_output();
+			std::cout << ", what block would you like to select? (Please Enter a number): ";
+			std::cin >> current_move; std::cout << std::endl;
+			
+			if (std::cin.fail() || current_move <= 0 || current_move >= 10)
+			{
+				std::cin.clear();
+				std::cin.ignore(100, '\n');
+				int tmp = this->input_error(player_1);
+				current_move = tmp;
+			}
+			player_1_moves.push_back(current_move);
+			player_1_turn = false;
+		}
 
-	else if (player_1_turn == false)
-	{
-		player_2.name_output();
-		std::cout << " , what block would you like to select? (Please Enter a number): ";
-		std::cin >> current_move; std::cout << std::endl;
-		player_2_moves.push_back(current_move);
-		player_1_turn = true;
-	}
+		else if (player_1_turn == false)
+		{
+			player_2.name_output();
+			std::cout << " , what block would you like to select? (Please Enter a number): ";
+			std::cin >> current_move; std::cout << std::endl;
+
+			if (std::cin.fail() || current_move >= 10 || current_move <= 0)
+			{
+				std::cin.clear();
+				std::cin.ignore(100, '\n');
+				int tmp = this->input_error(player_2);
+				current_move = tmp;
+			}
+			player_2_moves.push_back(current_move);
+			player_1_turn = true;
+		}
 }
 //------------------------------------------------------------------------
 void game::reset()
@@ -388,6 +404,38 @@ void game::check_game()
 			return;
 		}
 	}
+}
+//---------------------------------------------------------------------
+int game::input_error(player user)
+{
+	int user_move;
+	
+	this->board_refresh();
+	user.name_output();
+	std::cout << " please re-enter your number: ";
+	std::cin >> user_move; std::cout << std::endl;
+	if (std::cin.fail() || current_move <= 0 || current_move >= 10)
+	{
+		bool tmp = true;
+		while (tmp == true)
+		{
+			if (std::cin.fail() || current_move <= 0 || current_move >= 10)
+			{
+				std::cin.clear();
+				std::cin.ignore(100, '\n');
+				this->board_refresh();
+				user.name_output();
+				std::cout << " please re-enter your number: ";
+				std::cin >> user_move; std::cout << std::endl;
+			}
+			else
+			{
+				tmp = false;
+			}
+		}
+	}
+
+	return user_move;
 }
 //---------------------------------------------------------------------
 void game::run_game()
