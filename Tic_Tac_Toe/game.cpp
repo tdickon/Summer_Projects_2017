@@ -191,8 +191,8 @@ void board::board_reset()
 void board::board_generation(player & player_1, player & player_2)
 {
 	std::cout << "\n\n\tTIC-TAC-TOE\n" << std::endl;
-	player_1.name_output(); std::cout << "( "; player_1.icon_output(); std::cout << "): "; player_1.win_count_output();
-	std::cout << " to "; player_2.win_count_output(); std::cout << ":( "; player_2.icon_output(); std::cout << ")";
+	player_1.name_output(); std::cout << "("; player_1.icon_output(); std::cout << "): "; player_1.win_count_output();
+	std::cout << " to "; player_2.win_count_output(); std::cout << ":("; player_2.icon_output(); std::cout << ")";
 	player_2.name_output(); std::cout << std::endl;
 	std::cout << "     |     |     " << std::endl;
 	std::cout << "  " << board_boxes[1] << "  |  " << board_boxes[2]
@@ -244,14 +244,8 @@ char get_icon()
 //1.)Default Constructor
 game::game()
 {
-	game_complete = false; 
+	game_complete = false;
 	player_1_turn = true;
-
-	for (int index = 0; index < 9; ++index)
-	{
-		completed_moves[index] = 0;
-	}
-
 }
 //----------------------------------------------------------------------
 void game::new_game()
@@ -279,65 +273,67 @@ void game::new_game()
 //----------------------------------------------------------------------
 void game::player_move()
 {
-		if (player_1_turn == true)
+	if (player_1_turn == true)
+	{
+		player_1.name_output();
+		std::cout << ", what block would you like to select? (Please Enter a number): ";
+		std::cin >> current_move; std::cout << std::endl;
+
+		if (std::cin.fail() || current_move <= 0 || current_move >= 10 || box_check(current_move) == false)
 		{
-			player_1.name_output();
-			std::cout << ", what block would you like to select? (Please Enter a number): ";
-			std::cin >> current_move; std::cout << std::endl;
-			
-			if (std::cin.fail() || current_move <= 0 || current_move >= 10 || box_check(current_move) == false)
+			bool tmp = true;
+			while (tmp == true)
 			{
-				bool tmp = true;
-				while (tmp == true)
+				if (std::cin.fail() || current_move <= 0 || current_move >= 10 || box_check(current_move) == false)
 				{
-					if (std::cin.fail() || current_move <= 0 || current_move >= 10 || box_check(current_move) == false)
-					{
-						std::cin.clear();
-						std::cin.ignore(100, '\n');
-						this->board_refresh();
-						player_1.name_output();
-						std::cout << " please re-enter your number: ";
-						std::cin >> current_move; std::cout << std::endl;
-					}
-					else
-					{
-						tmp = false;
-					}
+					std::cin.clear();
+					std::cin.ignore(100, '\n');
+					this->board_refresh();
+					player_1.name_output();
+					std::cout << " please re-enter your number: ";
+					std::cin >> current_move; std::cout << std::endl;
+				}
+				else
+				{
+					tmp = false;
 				}
 			}
-			
-			player_1_moves.push_back(current_move);
-			player_1_turn = false;
 		}
 
-		else if (player_1_turn == false)
+		player_1_moves.push_back(current_move);
+		completed_moves.push_back(current_move);
+		player_1_turn = false;
+	}
+
+	else if (player_1_turn == false)
+	{
+		player_2.name_output();
+		std::cout << " , what block would you like to select? (Please Enter a number): ";
+		std::cin >> current_move; std::cout << std::endl;
+		if (std::cin.fail() || current_move <= 0 || current_move >= 10 || box_check(current_move) == false)
 		{
-			player_2.name_output();
-			std::cout << " , what block would you like to select? (Please Enter a number): ";
-			std::cin >> current_move; std::cout << std::endl;
-			if (std::cin.fail() || current_move <= 0 || current_move >= 10 || box_check(current_move) == false)
+			bool tmp = true;
+			while (tmp == true)
 			{
-				bool tmp = true;
-				while (tmp == true)
+				if (std::cin.fail() || current_move <= 0 || current_move >= 10 || box_check(current_move) == false)
 				{
-					if (std::cin.fail() || current_move <= 0 || current_move >= 10 || box_check(current_move) == false)
-					{
-						std::cin.clear();
-						std::cin.ignore(100, '\n');
-						this->board_refresh();
-						player_2.name_output();
-						std::cout << " please re-enter your number: ";
-						std::cin >> current_move; std::cout << std::endl;
-					}
-					else
-					{
-						tmp = false;
-					}
+					std::cin.clear();
+					std::cin.ignore(100, '\n');
+					this->board_refresh();
+					player_2.name_output();
+					std::cout << " please re-enter your number: ";
+					std::cin >> current_move; std::cout << std::endl;
+				}
+				else
+				{
+					tmp = false;
 				}
 			}
-			player_2_moves.push_back(current_move);
-			player_1_turn = true;
 		}
+		player_2_moves.push_back(current_move);
+		completed_moves.push_back(current_move);
+		player_1_turn = true;
+	}
 }
 //------------------------------------------------------------------------
 void game::reset()
@@ -360,11 +356,15 @@ void game::play()
 	{
 		while (game_complete == false)
 		{
-			if(counter == 9)
+			if (counter == 9)
 			{
 				this->check_game();
 				current_move = 0;
 				counter = 0;
+				for (int index = 0; index < 9; ++index)
+				{
+					completed_moves[index] = 0;
+				}
 				this->reset();
 				this->board_refresh();
 				std::cout << "All blocks have been filled without a winner, please play again!" << std::endl;
@@ -382,7 +382,7 @@ void game::play()
 			system("CLS");
 			std::cout << "Would you like to play again? [y/n]: ";
 			std::cin >> tmp; std::cout << std::endl;
-			
+
 			if (tmp == 'y')
 			{
 				this->reset();
@@ -471,7 +471,8 @@ void game::run_game()
 //---------------------------------------------------------------------
 bool game::box_check(const int & box_selected)
 {
-	for (int index = 0; index < 9; ++index)
+	int size = completed_moves.size();
+	for (int index = 0; index < size; ++index)
 	{
 		if (box_selected == completed_moves[index])
 		{
