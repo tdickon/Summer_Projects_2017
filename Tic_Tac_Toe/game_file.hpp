@@ -46,18 +46,19 @@ private:
 	std::vector<int> player_1_moves;
 	std::vector<int> player_2_moves;
 	int current_move;
+	int completed_moves[9];
 	board game_board;
 	bool game_complete;
 	bool player_1_turn;
 public:
-	game() { game_complete = false; player_1_turn = true; }
+	game();
 	void run_game();
 	void reset();
 	void check_game(); //After every move, the game will check to see if the game has been completed. It will also assign the next player to go.
 	void player_move(); //Player move will be made after every check, they will type a number in from 1 to 9 to choose their space.
 	void play(); //Play run's the game each frame, and runs in the run_game file;
 	void board_refresh();
-	int input_error(player);
+	bool box_check(const int &); 
 	void new_game(); //At completion of the game, the player will be asked if they want to start a new game.
 };
 
