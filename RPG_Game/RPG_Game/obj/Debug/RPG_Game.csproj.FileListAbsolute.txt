@@ -1,0 +1,11 @@
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\bin\Debug\RPG_Game.exe.config
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\obj\Debug\RPG_Game.csprojResolveAssemblyReference.cache
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\obj\Debug\RPG_Game.Properties.Resources.resources
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\obj\Debug\RPG_Game.csproj.GenerateResource.Cache
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\bin\Debug\RPG_Game.exe
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\bin\Debug\RPG_Game.pdb
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\bin\Debug\Engine.dll
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\bin\Debug\Engine.pdb
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\obj\Debug\RPG_Game.exe
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\obj\Debug\RPG_Game.pdb
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\RPG_Game\obj\Debug\RPG_Game.RPG.resources

@@ -1,0 +1,5 @@
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\Engine\bin\Debug\Engine.dll
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\Engine\bin\Debug\Engine.pdb
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\Engine\obj\Debug\Engine.dll
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\Engine\obj\Debug\Engine.pdb
+C:\Users\Tyler Dickon\Documents\@C++Programs\RPG_Game\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
