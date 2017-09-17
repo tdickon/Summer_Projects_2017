@@ -69,80 +69,101 @@ void reset_move_set(std::vector<int> & player_moves)
 		return;
 	}
 }
-//=========================================================================
-//**PLAYER CLASS**
-//=========================================================================
+
+//********************************************************************************
+//--CHARACTER DOMAIN--
+//*********************************************************************************
+///////////////////////////////////////////////////////////////////////////////////
+//!!CLASSES IN DOMAIN ARE LOCATED BELOW!!
+///////////////////////////////////////////////////////////////////////////////////
+//=================================================================================
+//**CHARACTER_CLASS**
+//=================================================================================
+//---------------------------------------------------------------------------------
 //++CONSTRUCTORS++
-//-------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 //1.)Default Constructor
-player::player()
+character::character()
 {
-	player_name = "\0";
-	player_icon = '\0';
+	character_name = "\0";
+	character_icon = '\0';
 	win_count = 0;
+	money_won = 0;
 }
-//-------------------------------------------------------------------------
-//2.) string, char constructor (If these two are provided
-player::player(std::string name, char icon)
+//---------------------------------------------------------------------------------
+//2.) CTOR that takes a string name and a char icon
+character::character(std::string user_name, char user_icon)
 {
-	player_name = name;
-	player_icon = icon;
+	character_name = user_name;
+	character_icon = user_icon;
 	win_count = 0;
+	money_won = 0;
 }
-//-------------------------------------------------------------------------
-//ACCESSORS
-void player::name_output()
+//----------------------------------------------------------------------------------
+//++ACCESSORS++
+//----------------------------------------------------------------------------------
+//1.)name_output - outputs the user's name.
+void character::name_output()
 {
-	std::cout << player_name;
+	std::cout << character_name;
 }
-//--------------------------------------------------------------------------
-void player::icon_output()
+//----------------------------------------------------------------------------------
+//2.)icon_output - outputs the user's icon. 
+void character::icon_output()
 {
-	std::cout << player_icon;
+	std::cout << character_icon;
 }
-void player::win_count_output()
+//-----------------------------------------------------------------------------------
+//3.)win_count_output - outputd the user's win total
+void character::win_count_output()
 {
 	std::cout << win_count;
 }
-//-------------------------------------------------------------------------
-//++OPERATOR OVERLOADING++
-//-------------------------------------------------------------------------
-//1.)Void Swap, swaps two player character's private values.
-void player::swap(player & right_hand_side)
+//-----------------------------------------------------------------------------------
+//4.)return_char_icon - returns the user's icon to be used in other functions
+char character::return_char_icon()
 {
-	//Swap The User Names First
-	std::string tmp_name = player_name;
-	player_name = right_hand_side.player_name;
-	right_hand_side.player_name = tmp_name;
-
-	//Swap The Character Icons Next
-	char tmp_icon = player_icon;
-	player_icon = right_hand_side.player_icon;
-	right_hand_side.player_icon = tmp_icon;
-
-	//Lastly, Swap The Win Count
-	int tmp_win_count = win_count;
-	win_count = right_hand_side.win_count;
-	right_hand_side.win_count = tmp_win_count;
+	return character_icon;
 }
-//-------------------------------------------------------------------------
-//2.)Operator= Overloading, allows us to set two players = to each other.
-void player::operator=(player right_hand_side)
+//-----------------------------------------------------------------------------------
+//===================================================================================
+//**END OF CHARACTER CLASS**
+//===================================================================================
+/////////////////////////////////////////////////////////////////////////////////////
+//===================================================================================
+//**PLAYER_CHARACTER CLASS**
+//===================================================================================
+//-----------------------------------------------------------------------------------
+//++GETTERS++
+//-----------------------------------------------------------------------------------
+//1.) get_user_input - returns the user's cell input.
+int player_character::get_player_input()
 {
-	player_name = right_hand_side.player_name;
-	player_icon = right_hand_side.player_icon;
-	win_count = right_hand_side.win_count;
+	int user_cell_selection;
+	std::cout << "Please choose a cell:  "; std::cin >> user_cell_selection;
+	std::cout << std::endl;
 }
-//------------------------------------------------------------------------
-char player::return_user_icon()
+//------------------------------------------------------------------------------------
+//====================================================================================
+//**END PLAYER_CHARACTER CLASS**
+//====================================================================================
+//////////////////////////////////////////////////////////////////////////////////////
+//====================================================================================
+//**MACHINE_CHARACTER CLASS**
+//====================================================================================
+//------------------------------------------------------------------------------------
+//++GETTERS++
+//------------------------------------------------------------------------------------
+//1.) get_machine_input - generates a random number and returns it. 
+int machine_character::get_machine_input()
 {
-	char tmp;
-	tmp = player_icon;
-	return tmp;
+	srand(time(NULL));
+	return (rand() % 10);
 }
-//=========================================================================
-//**END OF PLAYER CLASS**
-//=========================================================================
+//------------------------------------------------------------------------------------
+//====================================================================================
+//**END MACHINE_CHARACTER CLASS**
+//====================================================================================
 
 //=========================================================================
 //**BOARD CLASS**
