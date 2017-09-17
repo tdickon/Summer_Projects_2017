@@ -2,6 +2,5 @@
 
 int main()
 {
-	game tmp;
-	tmp.run_game();
+	system_exe();
 }
