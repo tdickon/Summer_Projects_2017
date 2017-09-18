@@ -56,6 +56,29 @@ char character::return_char_icon()
 	return character_icon;
 }
 //-----------------------------------------------------------------------------------
+void character::add_win()
+{ 
+	this->win_count = win_count + 1;
+	if (win_count == 3)
+	{
+		this->money_won = 300000;
+	}
+
+	if (win_count == 6)
+	{
+		this->money_won = 600000;
+	}
+
+	if (win_count == 9)
+	{
+		this->money_won = 900000;
+	}
+
+	if (win_count == 10)
+	{
+		this->money_won = 1000000;
+	}
+}
 //===================================================================================
 //**END OF CHARACTER CLASS**
 //===================================================================================
@@ -73,15 +96,32 @@ int player_character::get_player_input()
 	std::cout << "Please choose a cell:  "; std::cin >> user_cell_selection;
 	std::cout << std::endl;
 
-	if (std::cin.fail())
-	{
-		get_player_input();
+	if (std::cin.fail() == true)
+	{	
+		bool pass_check = false;
+		while (pass_check == false)
+		{
+			if (std::cin.fail() == true)
+			{
+				std::cin.clear();
+				std::cin.ignore(100, '\n');
+				std::cout << " please re-enter your selection: ";
+				std::cin >> user_cell_selection; std::cout << std::endl;
+			}
+
+			else
+			{
+				pass_check = true;
+			}
+		}
 	}
 
 	else
 	{
 		return user_cell_selection;
 	}
+
+	return user_cell_selection;
 }
 //------------------------------------------------------------------------------------//------------------------------------------------------------------------------------
 //++OPERATOR OVERLOADING++
