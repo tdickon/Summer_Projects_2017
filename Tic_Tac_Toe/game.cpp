@@ -155,8 +155,8 @@ void pvp::new_game()
 	//Get Player_2's information. 
 	{
 		std::string user_name = get_user_name();
-		player_1.set_name(user_name);
-		player_1.set_icon('O');
+		player_2.set_name(user_name);
+		player_2.set_icon('O');
 	}
 
 	//INSERT A JUMP SCREEN HERE 
@@ -273,55 +273,90 @@ void pvp::check_game()
 //---------------------------------------------------------------------------------
 void pvp::play()
 {
+	game_complete = false;
 	refresh_screen();
 	board_refresh();
 	bool game_close = false;
 	int counter = 0;
-	while (game_close == false)
+	int player_1_wins = player_1.return_win_count();
+	int player_2_wins = player_2.return_win_count();
+	
+	while (player_1_wins <= 10 || player_2_wins <= 10)
 	{
-		while (game_complete == false)
+		while (game_close == false)
 		{
-			if (counter == 9)
+
+			while (game_complete == false)
 			{
-				this->check_game();
-				current_move = 0;
-				counter = 0;
-				for (int index = 0; index < 9; ++index)
+				if (counter == 9)
 				{
-					completed_moves[index] = 0;
+					this->check_game();
+					current_move = 0;
+					counter = 0;
+					for (int index = 0; index < 9; ++index)
+					{
+						completed_moves[index] = 0;
+					}
+					this->reset();
+					this->board_refresh();
+					std::cout << "All blocks have been filled without a winner, please play again!" << std::endl;
 				}
-				this->reset();
+
+				this->player_move();
+				this->check_game();
 				this->board_refresh();
-				std::cout << "All blocks have been filled without a winner, please play again!" << std::endl;
+				++counter;
 			}
 
-			this->player_move();
-			this->check_game();
-			this->board_refresh();
-			++counter;
-		}
-
-		if (game_complete == true)
-		{
-			char tmp;
-			refresh_screen();
-			std::cout << "Would you like to play again? [y/n]: ";
-			std::cin >> tmp; std::cout << std::endl;
-
-			if (tmp == 'y')
+			if (game_complete == true)
 			{
-				this->reset();
-				this->play();
-
-			}
-
-			else
-			{
-				game_close = true;
+				player_1_wins = player_1.return_win_count();
+				player_2_wins = player_2.return_win_count();
+				char tmp;
 				refresh_screen();
-				std::cout << "Thanks for playing!" << std::endl;
+				std::cout << "Would you like to play again? [y/n]: ";
+				std::cin >> tmp; std::cout << std::endl;
+
+				if (tmp == 'y')
+				{
+					if (player_1_wins == 10 || player_2_wins == 10)
+					{
+						game_close = true;
+						refresh_screen();
+						std::cout << "Thanks for playing!" << std::endl;
+						player_1.name_output(); std::cout << ": "; player_1.return_money_won();
+						std::cout << std::endl;
+						player_2.name_output(); std::cout << ": "; player_2.return_money_won();
+					}
+
+					else
+					{
+						this->reset();
+						this->play();
+					}
+
+				}
+
+				else
+				{
+					game_close = true;
+					refresh_screen();
+					std::cout << "Thanks for playing!" << std::endl;
+					player_1.name_output(); std::cout << ": "; player_1.return_money_won();
+					std::cout << std::endl;
+					player_2.name_output(); std::cout << ": "; player_2.return_money_won();
+				}
 			}
 		}
+	}
+
+	if (player_1_wins == 10 || player_2_wins == 10)
+	{
+		refresh_screen();
+		std::cout << "Thanks for playing!" << std::endl;
+		player_1.name_output(); std::cout << ": "; player_1.return_money_won();
+		std::cout << std::endl;
+		player_2.name_output(); std::cout << ": "; player_2.return_money_won();
 	}
 }
 //---------------------------------------------------------------------------------
@@ -478,55 +513,88 @@ void pvm::check_game()
 //---------------------------------------------------------------------------------
 void pvm::play()
 {
+	game_complete = false;
 	refresh_screen();
 	board_refresh();
 	bool game_close = false;
 	int counter = 0;
-	while (game_close == false)
+	int player_1_wins = player_1.return_win_count();
+	int player_2_wins = player_2.return_win_count();
+
+	while (player_1_wins <= 10 || player_2_wins <= 10)
 	{
-		while (game_complete == false)
+		while (game_close == false)
 		{
-			if (counter == 9)
+			while (game_complete == false)
 			{
-				this->check_game();
-				current_move = 0;
-				counter = 0;
-				for (int index = 0; index < 9; ++index)
+				if (counter == 9)
 				{
-					completed_moves[index] = 0;
+					this->check_game();
+					current_move = 0;
+					counter = 0;
+					for (int index = 0; index < 9; ++index)
+					{
+						completed_moves[index] = 0;
+					}
+					this->reset();
+					this->board_refresh();
+					std::cout << "All blocks have been filled without a winner, please play again!" << std::endl;
 				}
-				this->reset();
+
+				this->player_move();
+				this->check_game();
 				this->board_refresh();
-				std::cout << "All blocks have been filled without a winner, please play again!" << std::endl;
+				++counter;
 			}
 
-			this->player_move();
-			this->check_game();
-			this->board_refresh();
-			++counter;
-		}
-
-		if (game_complete == true)
-		{
-			char tmp;
-			refresh_screen();
-			std::cout << "Would you like to play again? [y/n]: ";
-			std::cin >> tmp; std::cout << std::endl;
-
-			if (tmp == 'y')
+			if (game_complete == true)
 			{
-				this->reset();
-				this->play();
-
-			}
-
-			else
-			{
-				game_close = true;
+				player_1_wins = player_1.return_win_count();
+				player_2_wins = player_2.return_win_count();
+				char tmp;
 				refresh_screen();
-				std::cout << "Thanks for playing!" << std::endl;
+				std::cout << "Would you like to play again? [y/n]: ";
+				std::cin >> tmp; std::cout << std::endl;
+
+				if (tmp == 'y')
+				{
+					if (player_1_wins == 10 || player_2_wins == 10)
+					{
+						game_close = true;
+						refresh_screen();
+						std::cout << "Thanks for playing!" << std::endl;
+						player_1.name_output(); std::cout << ": "; player_1.return_money_won();
+						std::cout << std::endl;
+						player_2.name_output(); std::cout << ": "; player_2.return_money_won();
+					}
+
+					else
+					{
+						this->reset();
+						this->play();
+					}
+				}
+
+				else
+				{
+					game_close = true;
+					refresh_screen();
+					std::cout << "Thanks for playing!" << std::endl;
+					player_1.name_output(); std::cout << ": "; player_1.return_money_won();
+					std::cout << std::endl;
+					player_2.name_output(); std::cout << ": "; player_2.return_money_won();
+				}
 			}
 		}
+	}
+
+	if (player_1_wins == 10 || player_2_wins == 10)
+	{
+		refresh_screen();
+		std::cout << "Thanks for playing!" << std::endl;
+		player_1.name_output(); std::cout << ": "; player_1.return_money_won();
+		std::cout << std::endl;
+		player_2.name_output(); std::cout << ": "; player_2.return_money_won();
 	}
 }
 //---------------------------------------------------------------------------------
@@ -558,4 +626,4 @@ void pvm::run_game()
 ///////////////////////////////////////////////////////////////////////////////////
 //*********************************************************************************
 //--END OF GAME DOMAIN--
-//*********************************************************************************
+//************************************************************************************
